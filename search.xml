@@ -313,6 +313,19 @@
       </tags>
   </entry>
   <entry>
+    <title>shiroFilter踩坑</title>
+    <url>/2021/01/07/shiroFilter%E8%B8%A9%E5%9D%91/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="shiroFilter踩坑"><a href="#shiroFilter踩坑" class="headerlink" title="shiroFilter踩坑"></a>shiroFilter踩坑</h1><p>今天出门了一趟，没有关电脑，服务器一直开着，回来发现某一些shiro设置了放行的后端接口竟然无法访问了。经过一段时间的debug，总的来说找到了原因，就是shiro过滤器的问题，通过搜索资料找到了问题根源。原来是HashMap和LinkedMap的问题。 我使用的是HashMap，HashMap不会按照顺序去存储，而shiro有个要求，就是”<strong>authc”</strong> 这个权限必须得放在放行权限的后面”<strong>anon</strong>“。所以使用HashMap时会导致某一些需要放行的接口被放在了authc下面，导致放行无效。</p>
+]]></content>
+      <categories>
+        <category>Shiro</category>
+      </categories>
+      <tags>
+        <tag>Shiro</tag>
+        <tag>Filter</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>shiro+redis整合实现session持久化登陆失败时也会生成session问题</title>
     <url>/2021/01/07/shiro+redis%E6%95%B4%E5%90%88%E5%AE%9E%E7%8E%B0session%E6%8C%81%E4%B9%85%E5%8C%96%E7%99%BB%E9%99%86%E5%A4%B1%E8%B4%A5%E6%97%B6%E4%B9%9F%E4%BC%9A%E7%94%9F%E6%88%90session%E9%97%AE%E9%A2%98/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>今天在给博客更新，将session存到redis中持久化存储，正常操作是没问题的，但是后来尝试发现，在我输入的密码是错误的时候，他也创建了session，经过我的一番从尾到头的debug。。。。<br>复杂的debug过程就不贴出来了，放出问题的根源<br>在登陆时，会访问到我用来记录日志的切面,而我的记录日志方法中有一个需要获取到当前登录的用户的信息，来完善日志的字段</p>
@@ -326,19 +339,6 @@
       <tags>
         <tag>Shiro</tag>
         <tag>Redis</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>shiroFilter踩坑</title>
-    <url>/2021/01/07/shiroFilter%E8%B8%A9%E5%9D%91/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="shiroFilter踩坑"><a href="#shiroFilter踩坑" class="headerlink" title="shiroFilter踩坑"></a>shiroFilter踩坑</h1><p>今天出门了一趟，没有关电脑，服务器一直开着，回来发现某一些shiro设置了放行的后端接口竟然无法访问了。经过一段时间的debug，总的来说找到了原因，就是shiro过滤器的问题，通过搜索资料找到了问题根源。原来是HashMap和LinkedMap的问题。 我使用的是HashMap，HashMap不会按照顺序去存储，而shiro有个要求，就是”<strong>authc”</strong> 这个权限必须得放在放行权限的后面”<strong>anon</strong>“。所以使用HashMap时会导致某一些需要放行的接口被放在了authc下面，导致放行无效。</p>
-]]></content>
-      <categories>
-        <category>Shiro</category>
-      </categories>
-      <tags>
-        <tag>Shiro</tag>
-        <tag>Filter</tag>
       </tags>
   </entry>
   <entry>
